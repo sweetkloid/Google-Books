@@ -41,7 +41,7 @@ const SignupForm = () => {
       });
 
       if (error) {
-        throw new Error('Something went wrong');
+        throw new Error(error.message);
       }
 
       const token = data.addUser.token;

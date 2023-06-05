@@ -6,6 +6,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
+    password: String!
     bookCount: Int
     savedBook: [Book]
   }
@@ -34,7 +35,7 @@ const typeDefs = gql`
   }
 #requring the user to log in to access data
   type Auth{
-    token: String
+    token: ID!
     user: User
   }
 
@@ -44,7 +45,9 @@ const typeDefs = gql`
 #type of data that can be changed and updated
   type Mutation{
     login(email: String!, password: String!): Auth
-    addUser(input: UserInput!): Auth
+    addUser(username: String!
+      email: String!
+      password: String!): Auth
     saveBook(input: BookInput!): User
     removeBook(bookId: ID!): User
   }

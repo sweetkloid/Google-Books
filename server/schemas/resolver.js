@@ -3,7 +3,7 @@ const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
-const resolvers = {
+const resolver = {
   Query: {
     //fetching information for logged in user with account
     me: async (parent, args, context) => {
@@ -17,10 +17,12 @@ const resolvers = {
 
   Mutation: {
     //creating a new user with given parameters
-    addUser: async (parent, { username, email, password }) => {
+    addUser: async (_, { input }) => {
+      console.log("addUser resolvers");
+      const { username, email, password } = input;
       const user = await User.create({ username, email, password });
       const token = signToken(user);
-      return { token, user };
+      return { token, user: { _id: user._id, username: user.username }};
     },
     login: async (parent, { email, password }) => {
       // looking up user by email
@@ -82,4 +84,4 @@ const resolvers = {
   },
 };
 
-module.exports = resolvers;
+module.exports = resolver;
