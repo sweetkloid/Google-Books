@@ -5,7 +5,7 @@ const path = require('path');
 //grabbing authentications
 const { authMiddleware } = require('./utils/auth');
 //grabbing schemas
-const { typeDefs, resolvers } = require('./schemas');
+const { typeDefs, resolver } = require('./schemas');
 const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
@@ -13,11 +13,11 @@ const app = express();
 //grabbing appollo files
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
+  resolver,
   context: authMiddleware,
 });
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // if we're in production, serve client/build as static assets

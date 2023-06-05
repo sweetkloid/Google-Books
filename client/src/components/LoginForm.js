@@ -8,7 +8,7 @@ import Auth from '../utils/auth';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [login, { error }] = useMutation(LOGIN_USER);
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
@@ -23,12 +23,15 @@ const LoginForm = () => {
 
     // check if form has everything (as per react-bootstrap docs)
     try{ 
-     await login({
-      variables: { ...userFormData },
+     const { data } =await login({
+      variables: userFormData
     });
+    
+    if (error) {
+      throw new Error('Something went wrong');
+    }
+    const token = data.login.token;
 
-    const { token, user } = data.login;
-    console.log(user);
     Auth.login(token);
   } catch (error) {
     console.error(error);
