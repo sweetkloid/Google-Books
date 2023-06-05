@@ -5,7 +5,7 @@ const path = require('path');
 //grabbing authentications
 const { authMiddleware } = require('./utils/auth');
 //grabbing schemas
-const { typeDefs, resolver } = require('./schemas');
+const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
@@ -13,7 +13,7 @@ const app = express();
 //grabbing appollo files
 const server = new ApolloServer({
   typeDefs,
-  resolver,
+  resolvers,
   context: authMiddleware,
 });
 
