@@ -74,6 +74,7 @@ const resolvers = {
     //removes a book by id
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
+        //finding book by id to remove it
         return Book.findOneAndUpdate(
           { _id: bookId },
           {
