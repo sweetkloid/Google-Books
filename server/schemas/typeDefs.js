@@ -39,7 +39,7 @@ const typeDefs = gql`
   }
 
   type Query{
-    me: User
+    me: [User]!
   }
 #type of data that can be changed and updated
   type Mutation{

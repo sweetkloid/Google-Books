@@ -1,9 +1,8 @@
 import { gql } from '@apollo/client';
-// quering based on typeDefs
 
 //grabbing the users (me) information on login
 export const GET_ME = gql`
-  query{
+  query User {
     me{
     _id
     username

@@ -8,17 +8,17 @@ import {
   Row,
   Col
 } from 'react-bootstrap';
-
-import { QUERY_ME } from '../utils/queries';
+import { useParams } from 'react-router-dom';
+import { GET_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 import { getMe } from '../utils/API';
 
 const SavedBooks = () => {
   const [userData, setUserData] = useState({});
-
-  const { data } = useQuery(userParam ? QUERY_ME : null, {
-    variables: { username: userParam },
+  const { username } = useParams();
+  const { data } = useQuery(username ? GET_ME : null, {
+    variables: { username },
     onCompleted: () => {
       setUserData(data.me)
     }
@@ -27,10 +27,10 @@ const SavedBooks = () => {
 
   useEffect(() => {
     // Fetch user data only if userParam or userDataLength changes
-    if (userParam || userDataLength) {
+    if (username || userDataLength) {
       getUserData();
     }
-  }, [userParam, userDataLength]);
+  }, [username, userDataLength]);
 
   const getUserData = async () => {
     try {
