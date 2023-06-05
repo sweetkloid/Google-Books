@@ -44,15 +44,8 @@ const typeDefs = gql`
 #type of data that can be changed and updated
   type Mutation{
     login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
-    saveBook(
-      author: String! 
-      description: String!
-      title: String
-      bookId: BookInput! 
-      image: String! 
-      link: String!
-      ): UserInput
+    addUser(input: UserInput!): Auth
+    saveBook(input: BookInput!): User
     removeBook(bookId: ID!): User
   }
   `;
