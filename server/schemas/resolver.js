@@ -54,36 +54,36 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-  saveBook: async (parent,  { book }, context, info) => {
-    const {author, description, title, bookId: bookId, image, link } = book;    
+    saveBook: async (parent, { book: bookInput }, context) => {
+      const { author, description, title, bookId, image, link } = bookInput;
 
-    const book = await Book.create({author, description, title, bookId: bookId, image, link });
+      const book = await Book.create({ author, description, title, bookId: bookId, image, link });
 
-    return {
-      author,
-      description,
-      title,
-      bookId,
-      image,
-      link,
-    }
-  },
-  },
-  removeBook: async (parent, { bookId}, context) => {
-    if (context.user) {
-      return Thought.findOneAndUpdate(
-        { _id: bookId },
-        {
-          $pull: {
-            book: {
-              _id: bookId,
+      return {
+        author,
+        description,
+        title,
+        bookId,
+        image,
+        link,
+      }
+    },
+    removeBook: async (parent, { bookId }, context) => {
+      if (context.user) {
+        return Book.findOneAndUpdate(
+          { _id: bookId },
+          {
+            $pull: {
+              books: {
+                _id: bookId,
+              },
             },
           },
-        },
-        { new: true }
-      );
-    }
-    throw new AuthenticationError('You need to be logged in!');
+          { new: true }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
 };
 
