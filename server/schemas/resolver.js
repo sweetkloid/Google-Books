@@ -1,21 +1,11 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { User, Book } = require('../models');
-const { signToken } = require('../utils/auth');
 
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Thought } = require('../models');
+const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    //grabbing all users
-    users: async () => {
-      return User.find().populate('user');
-    },
-    //finding user by username
-    user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('user');
-    },
+  
     //fetching information for logged in user with account
     me: async (parent, args, context) => {
       if (context.user) {
@@ -60,7 +50,7 @@ const resolvers = {
     saveBook: async (parent, { book: bookInput }, context) => {
       const { author, description, title, bookId, image, link } = bookInput;
 
-      const book = await Book.create({ author, description, title, bookId: bookId, image, link });
+      const book = await book.create({ author, description, title, bookId: bookId, image, link });
 
       return {
         author,

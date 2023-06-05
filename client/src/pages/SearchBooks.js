@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { SAVE_BOOK} from '../utils/mutations';
 import {
   Container,
   Col,
@@ -9,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
+import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
@@ -59,7 +60,7 @@ const SearchBooks = () => {
     }
   };
 
-  const [saveBookMutation, { error }] = useMutation(SAVE_BOOK_MUTATION);
+  const [saveBookMutation, { error }] = useMutation(SAVE_BOOK);
   // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
@@ -80,10 +81,7 @@ const SearchBooks = () => {
       if (error) {
         throw new Error('Something went wrong!');
       }
-  
-      // Access the response data and update the state accordingly
-      const savedBook = data.saveBook;
-   
+
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
