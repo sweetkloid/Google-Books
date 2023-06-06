@@ -57,7 +57,7 @@ const resolver = {
     
       const { authors, description, title, bookId, image, link } = input;
     
-      const book = await Book.findOneAndUpdate(
+      const book = await User.findOneAndUpdate(
         { bookId: bookId },
         { $addToSet: input},
         { upsert: true, new: true }

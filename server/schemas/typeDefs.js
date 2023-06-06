@@ -19,7 +19,7 @@ const typeDefs = gql`
   }
   #logging book data to be used later
   input BookInput {
-    bookId: ID
+    bookId: String
     author: [String]
     description: String
     title: String
