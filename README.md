@@ -20,7 +20,7 @@ npm install to access a variety of packages that made this app run!
 
 A link to the webpage is provided here: [Heroku](https://powerful-reef-26621.herokuapp.com/)
 
-![Screenshot](images/test2.png)
+![Screenshot](images/Capture.PNG)
 
 ## Contributing
 Thanks to the teacher, TA's, Learning Assistants for helping make this possible.
