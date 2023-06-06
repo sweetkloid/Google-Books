@@ -1,6 +1,7 @@
 
 const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
+const Book = require('../models/Book');
 const { signToken } = require('../utils/auth');
 
 const resolver = {
@@ -50,7 +51,7 @@ const resolver = {
     
     //creates a new book with given parameters
     saveBook: async (parent, input , context) => {
-      if (!user) {
+      if (!context.user) {
         throw new AuthenticationError('You must be logged in to save a book.');
       }
     
@@ -58,7 +59,7 @@ const resolver = {
     
       const book = await Book.findOneAndUpdate(
         { bookId: bookId },
-        { $addToSet: {input}},
+        { $addToSet: input},
         { upsert: true, new: true }
       );
     
