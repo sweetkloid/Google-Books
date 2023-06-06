@@ -10,21 +10,21 @@ const typeDefs = gql`
     savedBook: [Book]
   }
   type Book{
-    bookId: ID!
+    bookId: ID
     authors: [String]
     description: String
-    title: String!
+    title: String
     image: String
     link: String
   }
   #logging book data to be used later
   input BookInput {
-    author: String!
-    description: String!
-    title: String!
-    bookId: ID!
-    image: String!
-    link: String!
+    bookId: ID
+    author: [String]
+    description: String
+    title: String
+    image: String
+    link: String
   }
 #requring the user to log in to access data
   type Auth{

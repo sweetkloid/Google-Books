@@ -17,7 +17,7 @@ const resolver = {
 
   Mutation: {
     //creating a new user with given parameters
-    addUser: async (parent, { input }) => {
+    addUser: async (parent, input) => {
       console.log("addUser resolvers");
       const { username, email, password } = input;
       const user = await User.create({ username, email, password });
@@ -49,19 +49,20 @@ const resolver = {
     },
     
     //creates a new book with given parameters
-    saveBook: async (parent, { book: bookInput }, context) => {
-      const { author, description, title, bookId, image, link } = bookInput;
-
-      const book = await Book.create({ author, description, title, bookId: bookId, image, link });
-
-      return {
-        author,
-        description,
-        title,
-        bookId,
-        image,
-        link,
+    saveBook: async (parent, input , context) => {
+      if (!user) {
+        throw new AuthenticationError('You must be logged in to save a book.');
       }
+    
+      const { authors, description, title, bookId, image, link } = input;
+    
+      const book = await Book.findOneAndUpdate(
+        { bookId: bookId },
+        { $addToSet: {input}},
+        { upsert: true, new: true }
+      );
+    
+      return book;
     },
     //removes a book by id
     removeBook: async (parent, { bookId }, context) => {
